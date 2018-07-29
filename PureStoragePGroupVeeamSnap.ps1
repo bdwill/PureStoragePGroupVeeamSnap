@@ -38,6 +38,47 @@ SOFTWARE.
 # Load Veeam PowerShell SnapIn
 Add-PSSnapin VeeamPSSnapIn -ErrorAction SilentlyContinue
 
+# Check for Pure Storage PowerShell SDK and install if not present
+if (!(Get-Module -Name PureStoragePowerShellSDK -ErrorAction SilentlyContinue)) {
+    if ( !(Get-Module -ListAvailable -Name PureStoragePowerShellSDK -ErrorAction SilentlyContinue) )
+    {
+        if (get-Module -name PowerShellGet -ListAvailable)
+        {
+            try
+            {
+                Get-PackageProvider -name NuGet -ListAvailable -ErrorAction stop | Out-Null
+            }
+            catch
+            {
+                Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope CurrentUser -Confirm:$false | Out-Null
+            }
+            try
+            {
+                Install-Module -Name PureStoragePowerShellSDK –Scope CurrentUser -Confirm:$false -Force
+            }
+            catch
+            {
+                write-host "Pure Storage PowerShell SDK cannot be installed."
+            }
+        }
+        else
+        {
+            write-host ("Pure Storage PowerShell SDK could not automatically be installed because PowerShellGet is not present. Please manually install PowerShellGet or the Pure Storage PowerShell SDK") -BackgroundColor Red
+            write-host "PowerShellGet can be found here https://www.microsoft.com/en-us/download/details.aspx?id=51451 or is included with PowerShell version 5"
+            write-host "Pure Storage PowerShell SDK can be found here https://github.com/PureStorage-Connect/PowerShellSDK"
+            write-host "Terminating Script" -BackgroundColor Red
+            return
+        }
+    }
+    if (!(Get-Module -Name PureStoragePowerShellSDK -ListAvailable -ErrorAction SilentlyContinue))
+    {
+        write-host ("Pure Storage PowerShell SDK not found. Please verify installation and retry.") -BackgroundColor Red
+        write-host "Pure Storage PowerShell SDK can be found here https://github.com/PureStorage-Connect/PowerShellSDK"
+        write-host "Terminating Script" -BackgroundColor Red
+        return
+    }
+}
+
 <# Use Encrypted Credentials
 *** If not done already, execute the following in a PowerShell command prompt ***
 Read-Host -AsSecureString  | ConvertFrom-SecureString | Out-File "c:\temp\Secure-Credentials.txt"
@@ -66,5 +107,5 @@ $volumes = $pg.volumes
 foreach ($vol in $volumes)
 	{
 		$volume = Get-StoragePluginVolume -name $vol
-	Add-StoragePluginSnapshot -volume $volume -name $(get-date -format FileDateTime)
+		Add-StoragePluginSnapshot -volume $volume -name $(get-date -format FileDateTime)
 	}
