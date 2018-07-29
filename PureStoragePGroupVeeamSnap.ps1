@@ -63,7 +63,7 @@ if (!(Get-Module -Name PureStoragePowerShellSDK -ErrorAction SilentlyContinue)) 
         }
         else
         {
-            write-host ("Pure Storage PowerShell SDK could not automatically be installed because PowerShellGet is not present. Please manually install PowerShellGet or the Pure Storage PowerShell SDK") -BackgroundColor Red
+            write-host "Pure Storage PowerShell SDK could not automatically be installed because PowerShellGet is not present. Please manually install PowerShellGet or the Pure Storage PowerShell SDK" -BackgroundColor Red
             write-host "PowerShellGet can be found here https://www.microsoft.com/en-us/download/details.aspx?id=51451 or is included with PowerShell version 5"
             write-host "Pure Storage PowerShell SDK can be found here https://github.com/PureStorage-Connect/PowerShellSDK"
             write-host "Terminating Script" -BackgroundColor Red
@@ -72,7 +72,7 @@ if (!(Get-Module -Name PureStoragePowerShellSDK -ErrorAction SilentlyContinue)) 
     }
     if (!(Get-Module -Name PureStoragePowerShellSDK -ListAvailable -ErrorAction SilentlyContinue))
     {
-        write-host ("Pure Storage PowerShell SDK not found. Please verify installation and retry.") -BackgroundColor Red
+        write-host "Pure Storage PowerShell SDK not found. Please verify installation and retry." -BackgroundColor Red
         write-host "Pure Storage PowerShell SDK can be found here https://github.com/PureStorage-Connect/PowerShellSDK"
         write-host "Terminating Script" -BackgroundColor Red
         return
