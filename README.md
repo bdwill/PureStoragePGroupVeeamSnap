@@ -4,7 +4,7 @@ This is a PowerShell script that enables Veeam Backup and Replication to create 
 
 ### Known Limitations
 
-This version only supports volume-based Protection Groups. If your Protection Group's members are hosts or host groups, the script will not work.
+This version only supports volume-based Protection Groups. If your Protection Group's members are hosts or host groups, the script will not work. I anticipate fixing this in an upcoming release as well as adding the ability to specify a volume instead of a Protection Group. Additionally, this script doesn't limit to the number of snapshots taken so please monitor your usage. A future version will address this issue as well.
 
 Author: Brandon Willmott, Pure Storage Systems Engineer
 
