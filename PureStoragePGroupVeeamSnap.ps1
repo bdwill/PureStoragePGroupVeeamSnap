@@ -10,6 +10,10 @@ Targeted use case is running this script on a user-defined basis in Windows Task
 (In Windows Task Scheduler)
 PowerShell.exe c:\PATH\PureStoragePGroupVeeamSnap.ps1
 
+Known Limitations
+-----------------
+In this version, only volume-based Protection Groups are supported.
+
 License
 --------
 MIT License
